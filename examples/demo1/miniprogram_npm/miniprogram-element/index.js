@@ -1,5 +1,6 @@
 const base = require('./base')
-
+console.log('miniprogram-element =======================')
+console.log('hello')
 Component({
     behaviors: [base],
     options: {

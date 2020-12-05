@@ -3,7 +3,8 @@ const fs = require('fs')
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.config')
 
-const domSubTreeLevel = 10
+const domSubTreeLevel = 1
+// const destDir = path.resolve(__dirname, '../src/template')
 const destDir = path.resolve(__dirname, '../src/template')
 
 /**
@@ -29,10 +30,10 @@ function getSubtreeSimple(i) {
     const isLast = i === domSubTreeLevel
     const isFirst = i === 1
     const subContent = [
-        `<block wx:if="{{${itemName}.type === 'text'}}">{{${itemName}.content}}</block>`,
-        `<template wx:elif="{{${itemName}.isImage}}" is="img" data="{{...${itemName}}}"/>`,
-        `<template wx:elif="{{${itemName}.useTemplate}}" is="{{${itemName}.extra.wxCompName}}" data="{{...${itemName}.extra}}"/>`,
-        `<view wx:elif="{{${itemName}.isLeaf${isLast ? '' : ' || ' + itemName + '.isSimple'}}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className}}" style="{{${itemName}.style}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress">{{${itemName}.content}}${isLast ? '</view>' : ''}`
+        `<block wx:if="{{${itemName}.type === 'text'}}">{{${itemName}.content}}</block>\n`,
+        `<template wx:elif="{{${itemName}.isImage}}" is="img" data="{{...${itemName}}}"/>\n`,
+        `<template wx:elif="{{${itemName}.useTemplate}}" is="{{${itemName}.extra.wxCompName}}" data="{{...${itemName}.extra}}"/> \n`,
+        `<view wx:elif="{{${itemName}.isLeaf${isLast ? '' : ' || ' + itemName + '.isSimple'}}}" data-private-node-id="{{${itemName}.nodeId}}" data-private-page-id="{{${itemName}.pageId}}" id="{{${itemName}.id}}" class="{{${itemName}.className}}" style="{{${itemName}.style}}" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchCancel" bindtap="onTap" bindlongpress="onLongPress">{{${itemName}.content}}${isLast ? '</view>' : ''}\n`
     ]
 
     // 递归下一层
@@ -45,14 +46,14 @@ function getSubtreeSimple(i) {
 
     // 补充头尾
     const outputContent = [
-        `<block wx:for="{{${!isFirst ? 'item' + (i - 1) + '.' : ''}childNodes}}" wx:key="nodeId" wx:for-item="${itemName}">`,
+        `<block wx:for="{{${!isFirst ? 'item' + (i - 1) + '.' : ''}childNodes}}" wx:key="nodeId" wx:for-item="${itemName}">\n`,
         ...subContent,
-        '</block>'
+        '</block>\n'
     ]
 
     // 补充上一层的结束标签
     if (!isFirst) {
-        outputContent.push('</view>')
+        outputContent.push('</view>\n')
     }
 
     return outputContent
@@ -129,9 +130,9 @@ function createSubtreeCoverTemplate() {
  */
 function createInnerComponentTemplate() {
     let template = fs.readFileSync(path.join(__dirname, './inner-component.wxml'), 'utf8')
-        .replace(/[\n\r\t]+/g, ' ')
-        .replace(/\s+/g, ' ')
-        .replace(/>\s</g, '><')
+        // .replace(/[\n\r\t]+/g, ' ')
+        // .replace(/\s+/g, ' ')
+        // .replace(/>\s</g, '><')
     template = removeComment(template)
 
     // 写入文件
@@ -143,9 +144,9 @@ function createInnerComponentTemplate() {
  */
 function createIndexTemplate() {
     let template = fs.readFileSync(path.join(__dirname, './index.wxml'), 'utf8')
-        .replace(/[\n\r\t]+/g, ' ')
-        .replace(/\s+/g, ' ')
-        .replace(/>\s</g, '><')
+        // .replace(/[\n\r\t]+/g, ' ')
+        // .replace(/\s+/g, ' ')
+        // .replace(/>\s</g, '><')
     template = removeComment(template)
 
     // 写入文件

@@ -1,0 +1,5 @@
+<page-meta root-font-size="{{rootFontSize}}" page-style="{{pageStyle}}"></page-meta>
+<element 
+    data-private-node-id="e-body" 
+    data-private-page-id="{{pageId}}" >
+</element>
