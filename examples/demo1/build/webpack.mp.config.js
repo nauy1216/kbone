@@ -9,7 +9,8 @@ const MpPlugin = require('mp-webpack-plugin') // 用于构建小程序代码的 
 const isOptimize = false // 是否压缩业务代码，开发者工具可能无法完美支持业务代码使用到的 es 特性，建议自己做代码压缩
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
+    devtool: 'source-map',
     entry: {
         index: path.resolve(__dirname, '../src/index/main.mp.js'),
     },
