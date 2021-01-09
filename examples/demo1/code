@@ -1,0 +1,12 @@
+const eval5 =  require('./eval5.js');
+
+const interpreter = new eval5.Interpreter();
+ 
+const result = interpreter.evaluate(`
+var a = 100;
+var b = 200;
+ 
+a+b;
+ 
+`);
+console.log('result-----------------------', result)
